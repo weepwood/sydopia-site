@@ -277,6 +277,7 @@ export function createPaperTestimonials(target, initialOptions = {}) {
         order.unshift(index);
         applyOrder();
         currentIndex = order[order.length - 1];
+        if (document.activeElement === card) cards[currentIndex].focus({ preventScroll: true });
         stage.dispatchEvent(new CustomEvent('sui:change', { bubbles: true, detail: { index: currentIndex, item: items[currentIndex] } }));
       };
       if (reduced(options.reducedMotion) || !card.animate) { reorder(); return; }
