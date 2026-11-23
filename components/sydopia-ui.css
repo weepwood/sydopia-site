@@ -1,0 +1,207 @@
+/*
+ * Portable presentation components. All selectors are scoped under .sui-*.
+ * No global element selectors, reset, external font or Webflow classes.
+ */
+.sui-project-root,
+.sui-paper-root {
+  box-sizing: border-box;
+  color: #22231d;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.sui-project-root *, .sui-project-root *::before, .sui-project-root *::after,
+.sui-paper-root *, .sui-paper-root *::before, .sui-paper-root *::after {
+  box-sizing: border-box;
+}
+.sui-project-root { width: 100%; }
+.sui-project-viewport {
+  width: 100%;
+  overflow: hidden;
+  padding: 24px 0 10px;
+}
+.sui-project-viewport--static { overflow-x: auto; }
+.sui-project-track {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sui-gap, 32px);
+  width: max-content;
+  max-width: none;
+  transform: translateZ(0);
+}
+.sui-project-card {
+  flex: 0 0 var(--sui-card-width, 440px);
+  width: var(--sui-card-width, 440px);
+  margin: 0;
+  transition: translate .32s cubic-bezier(.2,.8,.2,1);
+}
+.sui-project-card:hover,
+.sui-project-card:focus-within { translate: 0 calc(-1 * var(--sui-lift, 12px)); }
+.sui-project-media {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--sui-aspect, 16 / 9);
+  background: #e9e5df;
+  overflow: hidden;
+  border-radius: var(--sui-radius, 5px);
+  box-shadow: 0 2px 5px #22222212;
+  text-decoration: none;
+}
+.sui-project-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity .35s ease, transform .6s ease;
+}
+.sui-project-image--hover {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+.sui-project-card:hover .sui-project-image--hover,
+.sui-project-card:focus-within .sui-project-image--hover { opacity: 1; }
+.sui-project-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px;
+  padding: 15px 0 4px;
+  opacity: .28;
+  transition: opacity .25s ease;
+}
+.sui-project-card:hover .sui-project-meta,
+.sui-project-card:focus-within .sui-project-meta { opacity: 1; }
+.sui-project-title {
+  margin: 0;
+  font: 400 clamp(22px, 2vw, 29px)/1.2 Georgia, 'Times New Roman', serif;
+}
+.sui-project-link {
+  flex: 0 0 auto;
+  color: inherit;
+  font: 400 13px/1.4 Arial, sans-serif;
+  text-underline-offset: 3px;
+}
+.sui-project-link:hover { text-decoration-thickness: 2px; }
+.sui-project-tags { display: flex; flex-wrap: wrap; gap: 6px; padding-top: 8px; }
+.sui-project-tag {
+  font-size: 10px;
+  border: 1px dashed currentColor;
+  border-radius: 30px;
+  padding: 5px 9px;
+}
+.sui-project-media:focus-visible,
+.sui-project-link:focus-visible,
+.sui-paper-card:focus-visible { outline: 3px solid #4459db; outline-offset: 5px; }
+
+.sui-paper-root { width: 100%; container-type: inline-size; }
+.sui-paper-stage {
+  width: min(100%, var(--sui-paper-max, 1050px));
+  max-width: 100%;
+  height: calc(var(--sui-paper-height, 500px) + 100px);
+  margin: 0 auto;
+  position: relative;
+  isolation: isolate;
+}
+.sui-paper-card {
+  appearance: none;
+  -webkit-appearance: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  inset: 48px 0 auto;
+  width: 100%;
+  height: var(--sui-paper-height, 500px);
+  margin: 0;
+  padding: var(--sui-paper-padding, 36px);
+  overflow: auto;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px #28251b16;
+  color: #13120e;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  transform: rotate(var(--sui-paper-angle, 0deg));
+  transform-origin: center center;
+  scrollbar-width: thin;
+}
+.sui-paper-content { display: flex; flex-direction: column; gap: 38px; width: 100%; }
+.sui-paper-label {
+  display: block;
+  padding: 0 0 22px;
+  width: 100%;
+  border-bottom: 1px dashed currentColor;
+  font: 700 12px/1.2 Arial, Helvetica, sans-serif;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+}
+.sui-paper-quote {
+  display: block;
+  white-space: pre-wrap;
+  font: 400 clamp(18px, 3cqw, var(--sui-paper-font, 34px))/1.28 Georgia, 'Times New Roman', serif;
+  overflow-wrap: anywhere;
+}
+.sui-paper-footer { display: flex; flex-direction: column; gap: 3px; margin-top: 30px; }
+.sui-paper-author {
+  display: block;
+  font: italic 400 clamp(25px, 3.8cqw, 45px)/1.1 Georgia, 'Times New Roman', serif;
+}
+.sui-paper-role {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: .09em;
+  font: 700 12px/1.35 Arial, sans-serif;
+}
+.sui-paper-sticker {
+  position: absolute;
+  top: 60%;
+  right: -7%;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(130px, 24%, 240px);
+  aspect-ratio: 1.7;
+  padding: 22px;
+  background: var(--sui-sticker-color, #ff4141);
+  color: #100c0d;
+  border-radius: 50%;
+  transform: translate(var(--sui-drag-x, 0px), var(--sui-drag-y, 0px)) rotate(-12deg);
+  font: italic 400 clamp(18px, 2.2vw, 30px)/1 Georgia, serif;
+  white-space: nowrap;
+  box-shadow: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.sui-paper-sticker:not(.sui-paper-sticker--image)::after {
+  content: '';
+  position: absolute;
+  inset: 9px;
+  border: 1px dashed currentColor;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.sui-paper-sticker--image { background: transparent; border-radius: 0; padding: 0; }
+.sui-paper-sticker-img { display: block; max-width: 100%; max-height: 100%; }
+.sui-paper-sticker--draggable { cursor: grab; touch-action: none; }
+.sui-paper-sticker--draggable:active { cursor: grabbing; }
+
+@media (max-width: 640px) {
+  .sui-project-viewport { padding-top: 16px; }
+  .sui-project-card { width: min(var(--sui-card-width, 440px), 78vw); flex-basis: min(var(--sui-card-width, 440px), 78vw); }
+  .sui-project-meta { opacity: 1; }
+  .sui-project-title { font-size: 19px; }
+  .sui-paper-stage { height: calc(var(--sui-paper-height, 500px) + 65px); }
+  .sui-paper-card { top: 35px; }
+  .sui-paper-content { gap: 20px; }
+  .sui-paper-label { padding-bottom: 14px; font-size: 10px; }
+  .sui-paper-sticker { right: -3%; top: 75%; width: 125px; font-size: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sui-project-card,
+  .sui-project-image,
+  .sui-project-meta { transition: none; }
+  .sui-project-card:hover,
+  .sui-project-card:focus-within { translate: 0; }
+}
