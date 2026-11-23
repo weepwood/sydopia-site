@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Sydopia UI — Reusable Components</title>
+  <meta name="description" content="零依赖作品跑马灯与纸张堆叠评价卡组件：交互演示、可视化参数与复制示例。">
+  <link rel="stylesheet" href="./sydopia-ui.css">
+  <style>
+    :root { --ink: #292a23; --muted: #85877d; --line: #dedfd5; --paper: #faf9f4; --green: #305d45; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font: 14px/1.55 Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    a { color: inherit; }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    .site-head { border-bottom: 1px solid var(--line); padding: 20px max(28px, calc((100vw - 1480px) / 2)); display: flex; justify-content: space-between; align-items: center; gap: 18px; }
+    .brand { font-size: 14px; font-weight: 800; letter-spacing: -.04em; text-decoration: none; }
+    .brand span { color: #c76149; }
+    .head-links { display: flex; align-items: center; gap: 22px; color: #5d5e56; font-size: 12px; }
+    .head-links a { text-decoration: none; }
+    .head-links a:hover { text-decoration: underline; }
+    .intro, .section-wrap { width: min(100% - 56px, 1480px); margin-inline: auto; }
+    .intro { padding: 94px 0 82px; display: grid; grid-template-columns: minmax(0,1fr) 300px; gap: 40px; align-items: end; }
+    .kicker { font-size: 11px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 20px; font: normal 400 clamp(48px, 7vw, 108px)/.98 Georgia, 'Times New Roman', serif; letter-spacing: -.06em; }
+    .intro p { max-width: 520px; margin: 0; color: #686b62; font-size: 15px; line-height: 1.9; }
+    .intro-aside { border-top: 1px solid var(--ink); padding-top: 14px; display: grid; gap: 5px; color: #74766e; font-size: 12px; }
+    .intro-aside strong { color: var(--ink); font-size: 13px; font-weight: 600; }
+    .component-section { border-top: 1px solid var(--line); padding: 44px 0 96px; }
+    .section-header { display: flex; justify-content: space-between; align-items: start; gap: 24px; padding-bottom: 30px; }
+    .section-header h2 { font: 400 clamp(32px,4vw,54px)/1.1 Georgia, serif; margin: 8px 0; letter-spacing: -.04em; }
+    .section-header p { margin: 0; color: var(--muted); max-width: 570px; }
+    .number { color: #b47b65; font: italic 22px Georgia, serif; }
+    .chip { display: inline-block; padding: 6px 11px; border: 1px solid #cbd0c5; border-radius: 50px; color: #697469; font-size: 11px; }
+    .demo-stage { background: #fefdf8; border: 1px solid #eeede7; border-radius: 6px; overflow: hidden; }
+    .demo-stage--marquee { padding: 52px 0 35px; }
+    .demo-stage--paper { padding: 50px 8% 28px; overflow: visible; }
+    .stage-label { margin: 0 28px 10px; color: #b0b2a8; font-size: 10px; text-transform: uppercase; letter-spacing: .14em; }
+    .control-wrap { margin-top: 22px; display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 24px; align-items: center; }
+    .controls { display: flex; gap: 18px 24px; flex-wrap: wrap; align-items: end; }
+    .field { display: flex; flex-direction: column; min-width: 125px; gap: 7px; color: #71736b; font-size: 11px; }
+    .field .value { margin-left: 5px; color: #262923; font-variant-numeric: tabular-nums; font-weight: 700; }
+    input[type=range] { accent-color: var(--green); width: 138px; }
+    select, input[type=color] { border: 1px solid #cdd0c6; border-radius: 4px; background: transparent; color: var(--ink); height: 33px; padding: 4px 8px; }
+    input[type=color] { padding: 2px; width: 62px; }
+    .toggle-field { flex-direction: row; gap: 8px; align-items: center; padding-bottom: 6px; }
+    .toggle-field input { accent-color: var(--green); }
+    .action-row { display: flex; gap: 8px; align-items: center; }
+    .action { border: 1px solid var(--ink); background: var(--ink); color: white; padding: 10px 15px; border-radius: 3px; font-size: 12px; white-space: nowrap; }
+    .action--outline { color: var(--ink); background: transparent; }
+    .action:hover { opacity: .82; }
+    .source-block { margin-top: 22px; background: #f1f1eb; border: 1px solid #e5e5de; border-radius: 4px; }
+    .source-bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid #ddded6; font-size: 11px; color: #71736b; }
+    .source-bar button { border: 0; background: transparent; text-decoration: underline; color: var(--ink); }
+    pre { padding: 18px 20px; margin: 0; overflow: auto; font: 12px/1.65 'SFMono-Regular', Consolas, monospace; color: #49524b; max-height: 310px; }
+    .hint { color: #979990; font-size: 11px; margin-top: 13px; }
+    footer { border-top: 1px solid var(--line); padding: 28px max(28px,calc((100vw - 1480px) / 2)); display: flex; justify-content: space-between; gap: 16px; font-size: 12px; color: #858780; }
+    @media(max-width: 900px) {
+      .intro { grid-template-columns: 1fr; padding: 60px 0 50px; }
+      .intro-aside { width: min(100%,400px); }
+      .control-wrap { grid-template-columns: 1fr; }
+      .demo-stage--paper { padding-inline: 5%; }
+    }
+    @media(max-width: 560px) {
+      .intro, .section-wrap { width: min(100% - 30px,1480px); }
+      .site-head { padding: 18px 15px; }
+      .head-links { gap: 12px; }
+      .intro { padding-top: 55px; }
+      .section-header { flex-direction: column; gap: 10px; }
+      .component-section { padding-bottom: 65px; }
+      .controls { gap: 18px; }
+      .demo-stage--marquee { padding-top: 25px; }
+      .demo-stage--paper { padding: 12px 15px; }
+      .sui-paper-sticker { right: -1%; }
+      footer { padding: 20px 15px; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-head">
+    <a class="brand" href="../index.html">SYDOPIA <span> / UI</span></a>
+    <nav class="head-links" aria-label="页面导航">
+      <a href="#marquee">Marquee</a><a href="#paper">Paper Stack</a>
+      <a href="./README.md">文档</a><a href="https://github.com/weepwood/sydopia-site/tree/main/components" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </nav>
+  </header>
+  <main>
+    <div class="intro">
+      <div>
+        <div class="kicker" style="margin-bottom:23px">Component experiments · 01 / 02</div>
+        <h1>Made to be<br><em>reused.</em></h1>
+        <p>从 Sydopia 作品展示和纸张评价模块抽离而来的可复用组件。保留原有视觉语言，移除 Webflow 依赖，支持实时参数调整与直接复制。</p>
+      </div>
+      <aside class="intro-aside"><strong>Framework-agnostic / No build step</strong><span>Vanilla JavaScript + CSS</span><span>Accessible interactions & reduced-motion</span><span>Copy only two files to your project</span></aside>
+    </div>
+
+    <section id="marquee" class="component-section">
+      <div class="section-wrap">
+        <div class="section-header"><div><span class="number">01 /</span><h2>Project Marquee</h2><p>无限循环滚动的项目画廊。图片 hover 切换、卡片浮起，停留时自动暂停。</p></div><span class="chip">Gallery · Interaction</span></div>
+      </div>
+      <div class="demo-stage demo-stage--marquee"><div class="stage-label">Live preview — hover a card</div><div id="marquee-preview"></div></div>
+      <div class="section-wrap">
+        <div class="control-wrap">
+          <div class="controls">
+            <label class="field">滚动速度 <span class="value" id="speed-value"></span><input id="speed" type="range" min="10" max="130" step="2" value="48"></label>
+            <label class="field">卡片宽度 <span class="value" id="width-value"></span><input id="width" type="range" min="220" max="620" step="10" value="440"></label>
+            <label class="field">间距 <span class="value" id="gap-value"></span><input id="gap" type="range" min="0" max="80" step="2" value="28"></label>
+            <label class="field">滚动方向<select id="direction"><option value="left">向左</option><option value="right">向右</option></select></label>
+            <label class="field toggle-field"><input id="pause" type="checkbox" checked>悬停暂停</label>
+            <label class="field toggle-field"><input id="tags" type="checkbox">显示标签</label>
+          </div>
+          <div class="action-row"><button id="marquee-reset" class="action action--outline" type="button">恢复默认</button></div>
+        </div>
+        <div class="source-block"><div class="source-bar"><span>Usage / project-marquee.js</span><button type="button" data-copy="marquee-code">复制示例代码</button></div><pre id="marquee-code"></pre></div>
+        <p class="hint">示例图片使用当前镜像仓库中的资源。复制组件到其他项目时，将图片地址替换为自己的资源路径。</p>
+      </div>
+    </section>
+
+    <section id="paper" class="component-section">
+      <div class="section-wrap">
+        <div class="section-header"><div><span class="number">02 /</span><h2>Paper Testimonials</h2><p>纸张层叠、偏移旋转和弹出换牌。点击最上层卡片切换评价，右侧贴纸支持拖动。</p></div><span class="chip">Editorial · Motion</span></div>
+        <div class="demo-stage demo-stage--paper"><div class="stage-label" style="margin-bottom:0">Live preview — click to shuffle</div><div id="paper-preview"></div></div>
+        <div class="control-wrap">
+          <div class="controls">
+            <label class="field">卡片高度 <span class="value" id="height-value"></span><input id="height" type="range" min="360" max="680" step="10" value="500"></label>
+            <label class="field">正文字号 <span class="value" id="font-value"></span><input id="font" type="range" min="20" max="48" step="1" value="34"></label>
+            <label class="field">换牌时间 <span class="value" id="duration-value"></span><input id="duration" type="range" min="150" max="1200" step="50" value="500"></label>
+            <label class="field">首张纸颜色<input id="paper-color" type="color" value="#f5f3a1"></label>
+            <label class="field">贴纸类型<select id="sticker"><option value="original">原站 SVG 贴纸</option><option value="text">纯 CSS 文字贴纸</option><option value="none">隐藏贴纸</option></select></label>
+          </div>
+          <div class="action-row"><button id="next-paper" class="action" type="button">下一张 ↗</button><button id="paper-reset" class="action action--outline" type="button">恢复默认</button></div>
+        </div>
+        <div class="source-block"><div class="source-bar"><span>Usage / paper-testimonials.js</span><button type="button" data-copy="paper-code">复制示例代码</button></div><pre id="paper-code"></pre></div>
+        <p class="hint">组件自身不会加载 Webflow、jQuery、外部字体。贴纸图片可选；不提供图片时使用可自定义文字的 CSS 贴纸。</p>
+      </div>
+    </section>
+  </main>
+  <footer><span>Reusable components extracted from the Sydopia site mirror.</span><span>Two files. Zero runtime dependencies. Original site kept intact.</span></footer>
+  <script type="module">
+    import { createProjectMarquee, createPaperTestimonials } from './sydopia-ui.js';
+
+    const asset = (file) => '../_assets/' + file;
+    const originalSticker = asset('6a76388e42ac711931af5cc9_f0c0697094c1bf0e68563bb53306fcee_sydopia-testimonials-sticker.svg');
+    const projects = [
+      { title:'WTFork', image:asset('6af1c6b12ae7279fd2abeee6_wft-cover.gif'), hoverImage:asset('6af1f56d0d808f7a4c759f1d_wft-rollover.png'), href:'../work/wtfork/index.html', linkLabel:'Case Study', tags:['Branding','UI'] },
+      { title:'Heart & Soil', image:asset('6a36698e218a8ed4ef6f46a5_7b24e152798891fcdf8f93b411cc623e_heart-soil-cover.png'), hoverImage:asset('6af19627fb9ac805f0121890_HS-rollover.png'), href:'https://www.heartandsoilflowers.com/', linkLabel:'Visit Website', tags:['Web Design'] },
+      { title:'Join Jules', image:asset('6889d88c8440fb4550bb7b9a_1f7bf875047799b20ab980eda96bc585_join-jules-img.gif'), hoverImage:asset('6af06e9651913ba87e49f90e_c23806a1c58aebdd099ed21c8aee6bb4_JJ_Rollover.png'), href:'../work/join-jules/index.html', linkLabel:'Case Study', tags:['Branding','UX'] },
+      { title:'The House that Lars Built', image:asset('6889d8a3d360b87bf587d428_d2db473b0c5d70de0bef4640e9d75dd9_lars-shop-cover.png'), hoverImage:asset('6af071ca4c6b3a491b8a059e_2de25be20f319530d8bbc159dca3b2f6_Lars_Shopify_-_Rollover.png'), href:'https://shop.thehousethatlarsbuilt.com/', linkLabel:'Visit Website', tags:['Ecommerce'] },
+      { title:'Worthwhile Paper', image:asset('6af8b80b00c4433bf94154a2_wp-cover.png'), hoverImage:asset('6af8b811e60d5ea5c455b54c_wp-rollover.png'), href:'https://worthwhilepaper.com/', linkLabel:'Visit Website', tags:['Web Design'] },
+      { title:'OurFamilyWizard', image:asset('6af22d9c35aaef72aebce269_ofw-cover.png'), hoverImage:asset('6889d8b52d4778c59c37dff3_ofw-brand-book-cover.png'), href:'../work/ourfamilywizard/index.html', linkLabel:'Case Study', tags:['Identity'] }
+    ];
+    const reviews = [
+      { quote:'“Sydney has been an essential and delightful member of our team. She has completely changed our approach to our site design—delighting our users and improving our conversion rates. If you are a fan of efficiency, rigorous attention to detail, and beautiful websites, you’re going to love working with her.”', author:'Kelsey Propsom', role:'OurFamilyWizard' },
+      { quote:'“I’ve worked with many designers in my career and let me tell you, ones like Sydney are very hard to come by. She is a true problem solver who can grapple with complexity to offer thoughtful design solutions.”', author:'Do-Hee Kim', role:'Shoppe Theory' },
+      { quote:'“Working with Sydney was an outstanding experience from start to finish. She brought our brand to life with incredible creativity, clarity, and timely execution.”', author:'Christoph Krumm', role:'Sironix Renewables' },
+      { quote:'“Sydney is my number one choice for any design project I’m involved with. Working with Sydney means excellent collaboration, clear direction, and the confidence that your design will look amazing.”', author:'Brandon Ivers', role:'Psychobummer' }
+    ];
+    const defaults = { speed:48, width:440, gap:28, direction:'left', pause:true, tags:false, height:500, font:34, duration:500, color:'#f5f3a1', sticker:'original' };
+    const $ = (id) => document.getElementById(id);
+    const marquee = createProjectMarquee($('marquee-preview'), { items:projects, speed:48, gap:28, cardWidth:440 });
+    const paper = createPaperTestimonials($('paper-preview'), { items:reviews, cardHeight:500, fontSize:34, stickerSrc:originalSticker });
+    const read = () => ({
+      speed:+$('speed').value, width:+$('width').value, gap:+$('gap').value, direction:$('direction').value,
+      pause:$('pause').checked, tags:$('tags').checked, height:+$('height').value, font:+$('font').value,
+      duration:+$('duration').value, color:$('paper-color').value, sticker:$('sticker').value
+    });
+    function repaintMarquee() {
+      const v = read();
+      marquee.update({ speed:v.speed, gap:v.gap, cardWidth:v.width, direction:v.direction, pauseOnHover:v.pause, showTags:v.tags });
+      $('speed-value').textContent = v.speed + ' px/s';
+      $('width-value').textContent = v.width + ' px';
+      $('gap-value').textContent = v.gap + ' px';
+      $('marquee-code').textContent = [
+        "import { createProjectMarquee } from './sydopia-ui.js';",
+        "// Also import sydopia-ui.css in your HTML.",
+        "",
+        "const marquee = createProjectMarquee('#my-projects', {",
+        "  items: [",
+        "    { title: 'Project A', image: '/images/cover.jpg', hoverImage: '/images/hover.jpg', href: '/project-a' },",
+        "    { title: 'Project B', image: '/images/cover-2.jpg', href: '/project-b' }",
+        "  ],",
+        "  speed: " + v.speed + ", gap: " + v.gap + ", cardWidth: " + v.width + ",",
+        "  direction: '" + v.direction + "', pauseOnHover: " + v.pause + ", showTags: " + v.tags,
+        "});",
+        "// marquee.update({ speed: 60 });  marquee.destroy();"
+      ].join('\n');
+    }
+    function repaintPaper() {
+      const v = read();
+      paper.update({
+        cardHeight:v.height, fontSize:v.font, duration:v.duration,
+        colors:[v.color, '#ffacc4','#2fa15b','#9bc4ff'],
+        stickerSrc:v.sticker === 'original' ? originalSticker : '',
+        stickerText:v.sticker === 'none' ? '' : 'Rave Reviews'
+      });
+      $('height-value').textContent = v.height + ' px';
+      $('font-value').textContent = v.font + ' px';
+      $('duration-value').textContent = v.duration + ' ms';
+      $('paper-code').textContent = [
+        "import { createPaperTestimonials } from './sydopia-ui.js';",
+        "// Also import sydopia-ui.css in your HTML.",
+        "",
+        "const testimonials = createPaperTestimonials('#my-reviews', {",
+        "  items: [",
+        "    { quote: 'A thoughtful testimonial.', author: 'Jane Doe', role: 'Acme Studio' },",
+        "    { quote: 'A second testimonial.', author: 'John Doe', role: 'Example Co.' }",
+        "  ],",
+        "  colors: ['" + v.color + "', '#ffacc4', '#2fa15b', '#9bc4ff'],",
+        "  cardHeight: " + v.height + ", fontSize: " + v.font + ", duration: " + v.duration + ",",
+        "  stickerText: '" + (v.sticker === 'none' ? '' : 'Rave Reviews') + "'",
+        "});",
+        "// testimonials.next(); testimonials.update({ cardHeight: 540 });",
+        "// testimonials.destroy();"
+      ].join('\n');
+    }
+    ['speed','width','gap','direction','pause','tags'].forEach(id => $(id).addEventListener('input',repaintMarquee));
+    ['height','font','duration','paper-color','sticker'].forEach(id => $(id).addEventListener('input',repaintPaper));
+    function restore(ids) {
+      ids.forEach(id => {
+        const key = id === 'paper-color' ? 'color' : id;
+        if ($(id).type === 'checkbox') $(id).checked = defaults[key];
+        else $(id).value = defaults[key];
+      });
+    }
+    $('marquee-reset').addEventListener('click', () => { restore(['speed','width','gap','direction','pause','tags']); repaintMarquee(); });
+    $('paper-reset').addEventListener('click', () => { restore(['height','font','duration','paper-color','sticker']); repaintPaper(); });
+    $('next-paper').addEventListener('click', () => paper.next());
+    document.querySelectorAll('[data-copy]').forEach(button => button.addEventListener('click', async () => {
+      const text = $(button.dataset.copy).textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = '已复制 ✓';
+        setTimeout(() => { button.textContent = '复制示例代码'; }, 1600);
+      } catch (_) {
+        button.textContent = '请手动选择代码复制';
+      }
+    }));
+    repaintMarquee();
+    repaintPaper();
+  </script>
+</body>
+</html>
