@@ -23,7 +23,7 @@ assert.match(css, /\.sui-paper-root/);
 assert.match(css, /prefers-reduced-motion/);
 assert.match(html, /id="marquee-preview"/);
 assert.match(html, /id="paper-preview"/);
-assert.match(html, /src="\.\/sydopia-ui\.js"/, 'The demo must import the component module');
+assert.match(html, /from [\'"]\.\/sydopia-ui\.js[\'"]/, 'The demo must import the component module');
 
 const moduleScript = [...html.matchAll(/<script type="module">([\s\S]*?)<\/script>/g)];
 assert.equal(moduleScript.length, 1, 'Expected one demo entry module');
