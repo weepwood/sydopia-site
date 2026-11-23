@@ -1,0 +1,24 @@
+{
+  "name": "@weepwood/sydopia-ui",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Portable project marquee and editorial paper testimonials components",
+  "exports": {
+    ".": {
+      "types": "./sydopia-ui.d.ts",
+      "default": "./sydopia-ui.js"
+    },
+    "./style.css": "./sydopia-ui.css"
+  },
+  "files": [
+    "sydopia-ui.js",
+    "sydopia-ui.css",
+    "sydopia-ui.d.ts",
+    "README.md"
+  ],
+  "scripts": {
+    "check": "node --check sydopia-ui.js"
+  },
+  "license": "UNLICENSED"
+}
