@@ -141,7 +141,7 @@ export function createProjectMarquee(target, initialOptions = {}) {
         const clone = node.cloneNode(true);
         clone.setAttribute('aria-hidden', 'true');
         clone.querySelectorAll('a, button, [tabindex]').forEach((interactive) => {
-          interactive.removeAttribute('href');
+          // Keep the pointer link usable, but skip duplicate cards in keyboard navigation.
           interactive.tabIndex = -1;
           interactive.setAttribute('aria-hidden', 'true');
         });
@@ -198,7 +198,7 @@ export function createProjectMarquee(target, initialOptions = {}) {
   render();
   return {
     update(next = {}) { options = { ...options, ...next }; render(); },
-    destroy() { dispose(); host.replaceChildren(); host.classList.remove('sui-project-root'); host.removeAttribute('style'); }
+    destroy() { dispose(); host.replaceChildren(); host.classList.remove('sui-project-root'); ['--sui-gap','--sui-card-width','--sui-radius','--sui-lift','--sui-aspect'].forEach(key => host.style.removeProperty(key)); }
   };
 }
 
@@ -343,6 +343,6 @@ export function createPaperTestimonials(target, initialOptions = {}) {
   return {
     update(next = {}) { options = { ...options, ...next }; render(); },
     next() { advance(); },
-    destroy() { dispose(); host.replaceChildren(); host.classList.remove('sui-paper-root'); host.removeAttribute('style'); }
+    destroy() { dispose(); host.replaceChildren(); host.classList.remove('sui-paper-root'); ['--sui-paper-max','--sui-paper-height','--sui-paper-padding','--sui-paper-font','--sui-sticker-color'].forEach(key => host.style.removeProperty(key)); }
   };
 }
