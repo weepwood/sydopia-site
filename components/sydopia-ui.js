@@ -137,20 +137,29 @@ export function createProjectMarquee(target, initialOptions = {}) {
       }
       viewport.classList.remove('sui-project-viewport--static');
       // Append a full duplicate so the animation can wrap without a visible seam.
-      const appendCycle = () => originals.forEach((node) => {
-        const clone = node.cloneNode(true);
-        clone.setAttribute('aria-hidden', 'true');
-        clone.querySelectorAll('a, button, [tabindex]').forEach((interactive) => {
-          // Keep the pointer link usable, but skip duplicate cards in keyboard navigation.
-          interactive.tabIndex = -1;
-          interactive.setAttribute('aria-hidden', 'true');
+      const appendCycle = (beforeOriginals = false) => {
+        const batch = originals.map((node) => {
+          const clone = node.cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          clone.querySelectorAll('a, button, [tabindex]').forEach((interactive) => {
+            // Duplicate pointer links still work, but are excluded from Tab navigation.
+            interactive.tabIndex = -1;
+            interactive.setAttribute('aria-hidden', 'true');
+          });
+          return clone;
         });
-        track.appendChild(clone);
-        clones.push(clone);
-      });
-      appendCycle();
-      const firstClone = clones[0];
-      const distance = firstClone ? firstClone.offsetLeft - originals[0].offsetLeft : 0;
+        if (beforeOriginals) {
+          // Rightward scrolling starts on the accessible originals, not hidden clones.
+          for (let i = batch.length - 1; i >= 0; i--) track.prepend(batch[i]);
+        } else batch.forEach(node => track.appendChild(node));
+        clones.push(...batch);
+        return batch[0];
+      };
+      const rightward = options.direction === 'right';
+      const firstClone = appendCycle(rightward);
+      const distance = firstClone
+        ? Math.abs(firstClone.offsetLeft - originals[0].offsetLeft)
+        : 0;
       if (distance < 1) return;
       // The viewport can be wider than the data: fill it with further cycles.
       let safety = 0;
