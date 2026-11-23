@@ -1,0 +1,73 @@
+/*
+ * The Typekit service used to deliver this font or fonts for use on websites
+ * is provided by Adobe and is subject to these Terms of Use
+ * http://www.adobe.com/products/eulas/tou_typekit. For font license
+ * information, see the list below.
+ *
+ * neue-haas-grotesk-text:
+ *   - http://typekit.com/eulas/00000000000000007735bb33
+ *   - http://typekit.com/eulas/00000000000000007735bb35
+ *   - http://typekit.com/eulas/00000000000000007735bb32
+ *   - http://typekit.com/eulas/00000000000000007735bb4b
+ *   - http://typekit.com/eulas/00000000000000007735bb39
+ *   - http://typekit.com/eulas/00000000000000007735bb3d
+ * termina:
+ *   - http://typekit.com/eulas/00000000000000007735b21e
+ *   - http://typekit.com/eulas/00000000000000007735b220
+ *
+ * © 2009-2026 Adobe Systems Incorporated. All Rights Reserved.
+ */
+/*{"last_published":"2026-06-20 20:47:20 UTC"}*/
+
+
+
+@font-face {
+font-family:"termina";
+src:url("l.woff2") format("woff2"),url("d.woff") format("woff"),url("a.otf") format("opentype");
+font-display:auto;font-style:normal;font-weight:500;font-stretch:normal;
+}
+
+@font-face {
+font-family:"termina";
+src:url("l_bf144bd1a2.woff2") format("woff2"),url("d_74eb1bce60.woff") format("woff"),url("a_c29e5be6f1.otf") format("opentype");
+font-display:auto;font-style:normal;font-weight:600;font-stretch:normal;
+}
+
+@font-face {
+font-family:"neue-haas-grotesk-text";
+src:url("l_47f30ea9f6.woff2") format("woff2"),url("d_a02232f44c.woff") format("woff"),url("a_93ef16eef5.otf") format("opentype");
+font-display:auto;font-style:normal;font-weight:400;font-stretch:normal;
+}
+
+@font-face {
+font-family:"neue-haas-grotesk-text";
+src:url("l_4355747e5f.woff2") format("woff2"),url("d_a5f7e1b65c.woff") format("woff"),url("a_f1f0c2c42a.otf") format("opentype");
+font-display:auto;font-style:italic;font-weight:400;font-stretch:normal;
+}
+
+@font-face {
+font-family:"neue-haas-grotesk-text";
+src:url("l_aceb841c8d.woff2") format("woff2"),url("d_957594b766.woff") format("woff"),url("a_1bfcdbbd54.otf") format("opentype");
+font-display:auto;font-style:normal;font-weight:500;font-stretch:normal;
+}
+
+@font-face {
+font-family:"neue-haas-grotesk-text";
+src:url("l_ee0f09d1ac.woff2") format("woff2"),url("d_c9dbfb8d81.woff") format("woff"),url("a_bec12506e5.otf") format("opentype");
+font-display:auto;font-style:italic;font-weight:500;font-stretch:normal;
+}
+
+@font-face {
+font-family:"neue-haas-grotesk-text";
+src:url("l_c98e3b106f.woff2") format("woff2"),url("d_8bbf3632cb.woff") format("woff"),url("a_28f5fd05b8.otf") format("opentype");
+font-display:auto;font-style:normal;font-weight:700;font-stretch:normal;
+}
+
+@font-face {
+font-family:"neue-haas-grotesk-text";
+src:url("l_4d9d3b982c.woff2") format("woff2"),url("d_88bea55687.woff") format("woff"),url("a_beb83a05f6.otf") format("opentype");
+font-display:auto;font-style:italic;font-weight:700;font-stretch:normal;
+}
+
+.tk-termina { font-family: "termina",sans-serif; }
+.tk-neue-haas-grotesk-text { font-family: "neue-haas-grotesk-text",sans-serif; }
